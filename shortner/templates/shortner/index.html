@@ -1,0 +1,38 @@
+{% extends "shortner/layout.html" %}
+
+{% block body %}
+    <main>
+        <h1>URL Shortener</h1>
+        <form id="post-form">
+            {% csrf_token %}
+            <input type="text" name="link" id="input" placeholder="Enter URL here">
+            <div class="buttons">
+                <button type="submit" id="shorten">Shorten</button>
+            </div>
+            <section id="section"></section>
+        </form>
+    </main>
+
+    <!-- Jason Script for Shorten the url -->
+    <script type="javascript">
+        <!-- Make sure the page doesn't relaod -->
+        $(document).on('submit', '#post-form', function(e){
+            e.preventDefault();
+
+            <!-- Use ajax to get the url link -->
+            $.ajax({
+                type: 'POST',
+                url: '/create',
+
+                data: {
+                    link:$('#link').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),                      
+                },
+                success: function(){
+
+                }
+            });
+        });
+    </script>
+    
+{% endblock %}
